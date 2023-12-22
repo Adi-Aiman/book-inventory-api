@@ -39,7 +39,72 @@ class BooksModel(db.Model):
 
 @app.route('/')
 def hello():
-	return {"hello": "world"}
+	return {"book": "API"}
+
+# POST method : Add new book
+# GET  method : Return all books in the table
+@app.route('/books', methods=['POST', 'GET'])
+def handle_books():
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.get_json()
+            new_book = BooksModel(isbn=data['isbn'],title=data['title'], author=data['author'], year_published=data['year_published'],genre=data['genre'])
+
+            db.session.add(new_book)
+            db.session.commit()
+
+            return {"message": f"book {new_book.title} has been created successfully."}
+        else:
+            return {"error": "The request payload is not in JSON format"}
+
+    elif request.method == 'GET':
+        books = BooksModel.query.all()
+        results = [
+            {
+                "isbn": book.isbn,
+                "title": book.title,
+                "author": book.author,
+                "year_published": book.year_published,
+                "genre": book.genre
+            } for book in books]
+
+        return {"count": len(results), "books": results, "message": "success"}
+
+#GET method : return a specific book
+#PUT method : update a specific book
+#DELETE method : delete a specific book
+@app.route('/books/<book_isbn>', methods=['GET', 'PUT', 'DELETE'])
+def handle_book(book_isbn):
+    book = BooksModel.query.get_or_404(book_isbn)
+
+    if request.method == 'GET':
+        response = {
+            "isbn": book.isbn,
+            "title": book.title,
+            "author": book.author,
+            "year_published": book.year_published,
+            "genre": book.genre
+        }
+        return {"message": "success", "book": response}
+
+    elif request.method == 'PUT':
+        data = request.get_json()
+        book.isbn = data['isbn']
+        book.title = data['title']
+        book.author = data['author']
+        book.year_published = data['year_published']
+        book.genre = data['genre']
+
+        db.session.add(book)
+        db.session.commit()
+        
+        return {"message": f"Book {book.title} successfully updated"}
+
+    elif request.method == 'DELETE':
+        db.session.delete(book)
+        db.session.commit()
+        
+        return {"message": f"Book {book.title} successfully deleted."}
 
 if __name__ == '__main__':
     app.run(debug=True)
