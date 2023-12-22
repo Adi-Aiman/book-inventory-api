@@ -69,6 +69,9 @@ Summarize the goals and expected outcomes of the project.
 
 ## Appendix
 - **References:** Any references or resources to be used.
+https://www.fullstackpython.com/flask.html
+
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 
 # Notes:
 - Update this document as the project evolves.
@@ -76,3 +79,7 @@ Summarize the goals and expected outcomes of the project.
 
 # Start:
 -Received the task on Dec, 21 2023 at 6:41PM
+
+END of Day 1, Able to tackle all Tasks, and able to deploy the service on Render.com
+Even though the service able to run, the code base for this web api can still be improved.
+Main concern is about the database URL, I will look into it and find solution for it.
