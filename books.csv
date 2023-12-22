@@ -1,4 +1,4 @@
-ISBN,Title,Author,Year Published,Genre
+isbn,title,author,year_published,genre
 978-150-51423-879-1,The Divine Comedy,Leo Tolstoy,1903,Poetry
 978-835-92832-288-8,The Great Gatsby,William Shakespeare,2017,Romance
 978-382-40975-527-3,The Divine Comedy,Leo Tolstoy,1911,Tragedy
