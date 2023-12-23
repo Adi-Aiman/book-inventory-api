@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 
 
 class BooksModel(db.Model):
-    __tablename__ = 'books'
+    __tablename__ = 'book'
 
     isbn = db.Column(db.String(), primary_key=True)
     title = db.Column(db.String())
