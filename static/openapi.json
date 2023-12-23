@@ -1,0 +1,302 @@
+{
+  "info": {
+    "title": "Book Inventory REST API",
+    "description": "A web api to handle book inventory operations.",
+    "version": "v1"
+  },
+  "openapi": "3.0.3",
+  "servers": [
+    {
+      "url": "https://book-inventory-api.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "books",
+      "description": "book operation"
+    },
+    {
+      "name": "extra-field",
+      "description": "student"
+    }
+  ],
+  "paths": {
+    "/books": {
+      "get": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Returns All books in database",
+        "description": "Returns All books in database",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Add new book",
+        "description": "Add new book",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/book"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/books/{isbn}": {
+      "get": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Return specific book",
+        "description": "Return specific book",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "isbn number",
+            "example": "512-135-134-879-1",
+            "schema": {
+              "type": "integer",
+              "format": "int4"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Edit specific book",
+        "description": "Edit specific book",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "isbn number",
+            "example": "512-135-134-879-1",
+            "schema": {
+              "type": "integer",
+              "format": "int4"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Delete a book by isbn",
+        "description": "Delete a book by isbn",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "isbn number",
+            "example": "512-135-134-879-1",
+            "schema": {
+              "type": "integer",
+              "format": "int4"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/extra-field": {
+      "post": {
+        "tags": [
+          "extra-field"
+        ],
+        "summary": "summary->None",
+        "description": "description->None",
+        "operationId": "opearationID->None",
+        "requestBody": {
+          "description": "description->None",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Extra-Field"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Extra-Field"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Extra-Field"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Extra-Field"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Extra-Field"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "book": {
+        "type": "object",
+        "properties": {
+          "isbn": {
+            "type": "string",
+            "format": "varchar",
+            "example": "978-554-72587-216-7"
+          },
+          "title": {
+            "type": "string",
+            "format": "varchar",
+            "example": "Book of bok"
+          },
+          "author": {
+            "type": "string",
+            "format": "varchar",
+            "example": "Da vin ci"
+          },
+          "year_published": {
+            "type": "integer",
+            "format": "int4",
+            "example": 1990
+          },
+          "genre": {
+            "type": "string",
+            "format": "varchar",
+            "example": "Comedy"
+          }
+        }
+      },
+      "Extra-Field": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": "Error code"
+          },
+          "status": {
+            "type": "string",
+            "example": "Error name"
+          },
+          "message": {
+            "type": "string",
+            "example": "Error message"
+          },
+          "errors": {
+            "type": "object",
+            "example": "Errors"
+          }
+        }
+      }
+    }
+  }
+}
