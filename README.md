@@ -83,3 +83,12 @@ https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 END of Day 1, Able to tackle all Tasks, and able to deploy the service on Render.com
 Even though the service able to run, the code base for this web api can still be improved.
 Main concern is about the database URL, I will look into it and find solution for it.
+old link : https://book-inventory-api.onrender.com
+
+
+END of Day 2, Deploy the api through docker on render.com.
+Get the swagger/openapi to work with the web api
+working link on day 2 : https://docker-book-inventory-api.onrender.com
+might take 2 mins in order for service to restart
+
+
