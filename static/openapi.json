@@ -96,8 +96,8 @@
             "description": "isbn number",
             "example": "512-135-134-879-1",
             "schema": {
-              "type": "integer",
-              "format": "int4"
+              "type": "string",
+              "format": "varchar"
             }
           }
         ],
@@ -131,8 +131,8 @@
             "description": "isbn number",
             "example": "512-135-134-879-1",
             "schema": {
-              "type": "integer",
-              "format": "int4"
+              "type": "string",
+              "format": "varchar"
             }
           }
         ],
@@ -178,8 +178,8 @@
             "description": "isbn number",
             "example": "512-135-134-879-1",
             "schema": {
-              "type": "integer",
-              "format": "int4"
+              "type": "string",
+              "format": "varchar"
             }
           }
         ],
