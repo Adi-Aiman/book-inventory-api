@@ -1,9 +1,11 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_smorest import Api
+#from flask_smorest import Api
+from flask_restful import Api
+from flask_swagger_ui import get_swaggerui_blueprint
 
 
 
@@ -14,16 +16,30 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] ="postgresql://book_inventory_api_user:kDtYxkAwQOAn1t6F3fXLGZNqq5Rk0YCc@dpg-cm2it6ta73kc73eij540-a.singapore-postgres.render.com/book_inventory_api"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
-app.config["API_TITLE"] = "Stores REST API"
-app.config["API_VERSION"] = "v1"
-app.config["OPENAPI_VERSION"] = "3.0.3"
-app.config["OPENAPI_URL_PREFIX"] = "/"
-app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
-app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
+#app.config["API_TITLE"] = "Stores REST API"
+#app.config["API_VERSION"] = "v1"
+#app.config["OPENAPI_VERSION"] = "3.0.3"
+#app.config["OPENAPI_URL_PREFIX"] = "/"
+#app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
+#app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
+#api = Api(app)
 
-api = Api(app)
+SWAGGER_URL = '/help'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = '/static/openapi.json'  # Our API url (can of course be a local resource)
+
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    API_URL,
+    config={  # Swagger UI config overrides
+        'app_name': "Book Inventory API"
+    }    
+)
+
+app.register_blueprint(swaggerui_blueprint)
+
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db) 
 
 
 class BooksModel(db.Model):
@@ -49,7 +65,9 @@ class BooksModel(db.Model):
 
 @app.route('/')
 def hello():
-	return {"book": "API"}
+	return redirect("/help")#{"book": "API"}
+
+
 
 # POST method : Add new book
 # GET  method : Return all books in the table
