@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, redirect, make_response
+from flask import Flask, request, redirect, make_response 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_smorest import abort
@@ -86,7 +86,7 @@ def handle_books():
             except SQLAlchemyError:
                 return abort(make_response({'message':'An Error Occured While Inserting The Book'},500))
 
-            return {"message": f"book {new_book.title} has been created successfully."}
+            return make_response({"message": f"book {new_book.title} has been added successfully."},201)
         else:
             return {"error": "The request payload is not in JSON format"}
 
@@ -133,7 +133,7 @@ def handle_book(book_id):
         except SQLAlchemyError:
                 return abort(make_response({'message':'An Error Occured While Updating The Book'},500))
         
-        return {"message": f"Book {book.title} successfully updated"}
+        return make_response({"message": f"Book {book.title} successfully updated"},200)
 
     elif request.method == 'DELETE':
         try:
