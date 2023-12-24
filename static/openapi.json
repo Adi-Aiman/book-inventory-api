@@ -2,7 +2,7 @@
   "info": {
     "title": "Book Inventory REST API",
     "description": "A web api to handle book inventory operations.",
-    "version": "v1"
+    "version": "v1.1"
   },
   "openapi": "3.0.3",
   "servers": [
@@ -33,7 +33,20 @@
         "description": "Returns All books in database",
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "book <Book Title> has been added successfully."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -49,42 +62,56 @@
               "schema": {
                 "$ref": "#/components/schemas/book"
               }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/book"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/book"
-              }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "successful operation",
+          "201": {
+            "description": "successfully created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/book"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/book"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "book <Book Title> has been added successfully."
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "example": "An Error Occured While Inserting The Book"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/books/{isbn}": {
+    "/books/{id}": {
       "get": {
         "tags": [
           "books"
@@ -93,14 +120,14 @@
         "description": "Return specific book",
         "parameters": [
           {
-            "name": "isbn",
+            "name": "id",
             "in": "path",
             "required": true,
-            "description": "isbn number",
-            "example": "512-135-134-879-1",
+            "description": "id number",
+            "example": 1,
             "schema": {
-              "type": "string",
-              "format": "varchar"
+              "type": "integer",
+              "format": "serial4"
             }
           }
         ],
@@ -110,13 +137,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/book"
+                  "type": "object",
+                  "properties": {
+                    "book": {
+                      "type": "object",
+                      "example": {
+                        "author": "Tastoy",
+                        "genre": "Comedy",
+                        "isbn": "222-135-134-879-1",
+                        "title": "Caaer 2",
+                        "year_published": 2000
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  }
                 }
               }
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
           }
         }
       },
@@ -128,14 +190,14 @@
         "description": "Edit specific book",
         "parameters": [
           {
-            "name": "isbn",
+            "name": "id",
             "in": "path",
             "required": true,
-            "description": "isbn number",
-            "example": "512-135-134-879-1",
+            "description": "id number",
+            "example": 1,
             "schema": {
-              "type": "string",
-              "format": "varchar"
+              "type": "integer",
+              "format": "serial4"
             }
           }
         ],
@@ -145,25 +207,57 @@
               "schema": {
                 "$ref": "#/components/schemas/book"
               }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/book"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/book"
-              }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "successful operation"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "example": "Book <Book Title> successfully updated"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
           }
         }
       },
@@ -171,30 +265,69 @@
         "tags": [
           "books"
         ],
-        "summary": "Delete a book by isbn",
-        "description": "Delete a book by isbn",
+        "summary": "Delete a book by id",
+        "description": "Delete a book by id",
         "parameters": [
           {
-            "name": "isbn",
+            "name": "id",
             "in": "path",
             "required": true,
-            "description": "isbn number",
-            "example": "512-135-134-879-1",
+            "description": "id number",
+            "example": 1,
             "schema": {
-              "type": "string",
-              "format": "varchar"
+              "type": "integer",
+              "format": "serial4"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "example": "Book <Book Title> successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
           }
         }
       }
@@ -284,19 +417,27 @@
         "properties": {
           "code": {
             "type": "integer",
-            "example": "Error code"
+            "examples": [
+              "Error code"
+            ]
           },
           "status": {
             "type": "string",
-            "example": "Error name"
+            "examples": [
+              "Error name"
+            ]
           },
           "message": {
             "type": "string",
-            "example": "Error message"
+            "examples": [
+              "Error message"
+            ]
           },
           "errors": {
             "type": "object",
-            "example": "Errors"
+            "examples": [
+              "Errors"
+            ]
           }
         }
       }
