@@ -39,9 +39,32 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "book": {
+                      "type": "object",
+                      "example": [
+                        {
+                          "author": "Leo Tolstoy",
+                          "genre": "Comedy",
+                          "isbn": "512-135-134-879-1",
+                          "title": "ZECTAA",
+                          "year_published": 2000
+                        },
+                        {
+                          "author": "Mark",
+                          "genre": "Comedy",
+                          "isbn": "123-14132-5123",
+                          "title": "Funnnnnn Book",
+                          "year_published": 2022
+                        }
+                      ]
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 2
+                    },
                     "message": {
                       "type": "string",
-                      "example": "book <Book Title> has been added successfully."
+                      "example": "success"
                     }
                   }
                 }
