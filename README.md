@@ -69,9 +69,15 @@ Summarize the goals and expected outcomes of the project.
 
 ## Appendix
 - **References:** Any references or resources to be used.
+
 https://www.fullstackpython.com/flask.html
 
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+
+HTTP status code for CRUD
+
+https://www.moesif.com/blog/technical/api-design/Which-HTTP-Status-Code-To-Use-For-Every-CRUD-App/
+
 
 # Notes:
 - Update this document as the project evolves.
@@ -83,12 +89,23 @@ https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 END of Day 1, Able to tackle all Tasks, and able to deploy the service on Render.com
 Even though the service able to run, the code base for this web api can still be improved.
 Main concern is about the database URL, I will look into it and find solution for it.
+
 old link : https://book-inventory-api.onrender.com
 
 
 END of Day 2, Deploy the api through docker on render.com.
 Get the swagger/openapi to work with the web api
+
 working link on day 2 : https://docker-book-inventory-api.onrender.com
+
 might take 2 mins in order for service to restart
+
+END of Day 3, Realise that I have made a mistake regarding the book table, on day 1, in the midst of chasing the goal to tackle all the tasks and deploy on a hosting website. I somehow overlook the fact that, even though ISBN number are unique to each book, it is possible for a book not have ISBN number if it was not officially published, hence it cant be a primary key.
+
+Its like I wore my developer hat, but forgot to put on my database designer glasses :dizzy:
+
+After fixing the book table, I fix the status code for Create method, then update the web api swagger doc accordingly.
+
+Also patch the database url leak by using .env variable.
 
 
