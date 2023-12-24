@@ -7,13 +7,15 @@ from flask_smorest import abort
 from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
 from sqlalchemy.exc import SQLAlchemyError
+from dotenv import load_dotenv
 
+load_dotenv()
 
 
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] ="postgresql://book_inventory_api_user:kDtYxkAwQOAn1t6F3fXLGZNqq5Rk0YCc@dpg-cm2it6ta73kc73eij540-a.singapore-postgres.render.com/book_inventory_api"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 #app.config["API_TITLE"] = "Book Inventory REST API"
