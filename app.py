@@ -1,17 +1,13 @@
 import os
 
-from flask import Flask, request, redirect, make_response 
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, redirect 
 from flask_migrate import Migrate
-from flask_smorest import abort
-from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
-from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
-
-load_dotenv()
 from db import db
 from resources.book import book_B as book_blueprint
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -20,7 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
 SWAGGER_URL = '/help'  # URL for exposing Swagger UI (without trailing '/')
-API_URL = '/static/openapi.json'  # Our API url (can of course be a local resource)
+API_URL = '/static/openapi.json'  #API url / local resource
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
