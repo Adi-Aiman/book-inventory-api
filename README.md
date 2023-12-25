@@ -108,4 +108,13 @@ After fixing the book table, I fix the status code for Create method, then updat
 
 Also patch the database url leak by using .env variable.
 
+END of day 4,
+
+Decided to change the code structure, instead of monolithic, changed to modular.
+
+Also improve the seed script and automate the seeding procedure at the start of service
+
+Also delve in deeper into proper status code handling. The code can still be improved regarding that matter.
+
+
 
