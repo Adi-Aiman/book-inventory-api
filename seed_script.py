@@ -1,10 +1,37 @@
-import pandas as pd
-from sqlalchemy import create_engine
-
+import os
+from sqlalchemy import create_engine, Insert,inspect
+from dotenv import load_dotenv
+import csv
+from models.book import BooksModel
+load_dotenv()
 
 csv_file_path = "books.csv"
-engine = create_engine("postgresql://book_inventory_api_user:kDtYxkAwQOAn1t6F3fXLGZNqq5Rk0YCc@dpg-cm2it6ta73kc73eij540-a.singapore-postgres.render.com/book_inventory_api")
-with open(csv_file_path, 'r') as file:
-    data_df = pd.read_csv(file, header=0)
-data_df.to_sql(name='books', con=engine, index=False,  if_exists='replace')
+engine = create_engine(os.getenv("DATABASE_URL"))
+
+class Seeder():
+
+    
+    def seed_initial_values():
+        print("Seeding the initial values into the Database")
+        with open('books.csv', 'r', encoding="utf-8") as csvfile:
+            csv_reader = csv.reader(csvfile, delimiter=',')
+            next(csv_reader, None)  # skip the headers
+            with engine.connect() as conn:
+                for x in csv_reader:
+                    result = conn.execute(Insert(BooksModel).values(isbn=x[0],title=x[1],author=x[2],year_published=x[3],genre=x[4]))
+                
+                conn.commit()
+
+    def validate_table():
+        if(inspect(engine).has_table("book")):
+            print("Table Does Exist")
+            return True
+        else:
+            print("Table Does NOT Exist")
+            return False
+
+
+
+
+    
 
