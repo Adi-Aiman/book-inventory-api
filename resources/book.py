@@ -2,7 +2,8 @@ from flask import  request, make_response
 from flask_smorest import  Blueprint,abort
 from flask.views import MethodView
 from sqlalchemy.exc import SQLAlchemyError
-
+import json
+import traceback
 from models.book import BooksModel , db
 
 
@@ -28,18 +29,23 @@ class BOOK(MethodView):
     
     def post(self):
         if request.is_json:
-            data = request.get_json()
-            new_book = BooksModel( isbn=data['isbn'],title=data['title'], author=data['author'], year_published=data['year_published'],genre=data['genre'])
-
             try:
-                db.session.add(new_book)
+                 data = json.loads(request.data, strict=False)
+            except SQLAlchemyError:
+                 return make_response({"error": "There are issue with the json content","code":415},415)
+            try:
+                 new_book = BooksModel( isbn=data['isbn'],title=data['title'], author=data['author'], year_published=data['year_published'],genre=data['genre'])
+            except SQLAlchemyError:
+                 return make_response({"error": "There are issue with the json content, check the keys","code":422},422)
+            try:
+                db.session.add(new_book)    ### should check the the content to make sure keys and values are valid.
                 db.session.commit()
             except SQLAlchemyError:
-                return abort(make_response({'message':'An Error Occured While Inserting The Book'},500))
+                return abort(make_response({'message':f'An Error Occured While Inserting The Book '},500))
 
             return make_response({"message": f"book {new_book.title} has been added successfully."},201)
         else:
-            return {"error": "The request payload is not in JSON format"}
+            return make_response({"error": "The request payload is not in JSON format"},415)
         
 #GET method : return a specific book
 #PUT method : update a specific book
@@ -81,7 +87,3 @@ class BOOK_ID(MethodView):
         
         return {"message": f"Book {book.title} successfully deleted."}
     
-@book_B.route('/books/test/<test>')
-class BOOK_TEST(MethodView):
-    def get(self,test):
-         return make_response({"message":test},200)
