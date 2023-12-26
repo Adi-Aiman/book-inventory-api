@@ -116,5 +116,43 @@ Also improve the seed script and automate the seeding procedure at the start of 
 
 Also delve in deeper into proper status code handling. The code can still be improved regarding that matter.
 
+END of TASK <><><><>
+
+Add the student table, And implement the one to many relationship between student and book,
+
+Updated the openapi/swagger doc to match the current implementation.
+
+# Task Conclusion and Review
+The tasks is about developing a restful API for a book inventory, which also store the information about the student that borrowed books.
+
+To me it was an engaging tasks, I am able to learn new things regarding building a restful API using flask framework, it also open up new knowledge for me especially regarding the status code handling.
+
+Its clear to me that, I have a long road ahead of me in order to fully grasp the knowledge of building the restful API with flask.
+
+To Summarize
+
+API development :
+
+1. Seeding Data:
+
+I am able to create a seed script for adding initial values when a book table was newly created. I make use of sqlalchemy lib to complete the task.
+
+2. CRUD Operations:
+
+Able to successfully implement the CRUD operations for book and student table. And also implement one to many relationship between them.
+
+API Documentation:
+
+API documentation was succefully created using flask_swagger_ui library. Users can also interact with the API by using the swagger documentation.
+
+Testing:
+
+I tested the API through 3 medium, using the web browser, insomnia application, and swagger documentation. By testing, it also help me in status code handling process.
+
+Deployment:
+
+I deployed the API and the Postgresql Database on Render.com . The deployment is straight forward, it start by creating an account, then select the service to deploy, then put in the necessary information such and environment variable for postgresql URL.
+
+
 
 
