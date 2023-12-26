@@ -19,7 +19,7 @@
       "description": "book operation"
     },
     {
-      "name": "extra-field",
+      "name": "students",
       "description": "student"
     }
   ],
@@ -355,46 +355,310 @@
         }
       }
     },
-    "/extra-field": {
-      "post": {
+    "/books/borrow": {
+      "get": {
         "tags": [
-          "extra-field"
+          "books"
         ],
-        "summary": "summary->None",
-        "description": "description->None",
-        "operationId": "opearationID->None",
+        "summary": "Returns All books borrowed in database",
+        "description": "Returns All books borrowed in database",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "students": {
+                      "type": "object",
+                      "example": [
+                        {
+                          "Student Name": "Zack Queen",
+                          "author": "Jane Austen",
+                          "genre": "Epic",
+                          "isbn": "978-366-98371-770-0",
+                          "title": "To Kill a Mockingbird",
+                          "year_published": 1927
+                        },
+                        {
+                          "Student Name": "Malik",
+                          "author": "Harper Lee",
+                          "genre": "Romance",
+                          "isbn": "978-156-31577-242-6",
+                          "title": "War and Peace",
+                          "year_published": 1911
+                        }
+                      ]
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/borrow/{id}": {
+      "put": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Update Student ID on a book",
+        "description": "Update Student ID on a book",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id number",
+            "example": 1,
+            "schema": {
+              "type": "integer",
+              "format": "serial4"
+            }
+          }
+        ],
         "requestBody": {
-          "description": "description->None",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Extra-Field"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Extra-Field"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Extra-Field"
+                "type": "object",
+                "properties": {
+                  "student_id": {
+                    "type": "string",
+                    "example": "99257aa5-5e60-4217-be55-d87cd167445f"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
-          "default": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Book {book.title} borrow status has been updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Returns All books in database",
+        "description": "Returns All books in database",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "students": {
+                      "type": "object",
+                      "example": [
+                        {
+                          "student_id": "7e8c29cf-95c8-4450-816d-69d16344f1c9",
+                          "name": "Malik",
+                          "email": "malikk11@hotmail.com",
+                          "membership_start": "Sat, 25 Dec 2021 00:00:00 GMT"
+                        },
+                        {
+                          "student_id": "7e8c29cf-95c8-4450-816d-69d16344f1c9",
+                          "name": "Malik",
+                          "email": "malikk11@hotmail.com",
+                          "membership_start": "Sat, 25 Dec 2021 00:00:00 GMT"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Add New Student",
+        "description": "Add New Student",
+        "requestBody": {
+          "description": "description->None",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/student"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
             "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Extra-Field"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Student Zack King has been added successfully."
+                    }
+                  }
                 }
-              },
-              "application/xml": {
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Extra-Field"
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
                 }
               }
             }
@@ -435,32 +699,20 @@
           }
         }
       },
-      "Extra-Field": {
+      "student": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "integer",
-            "examples": [
-              "Error code"
-            ]
-          },
-          "status": {
+          "name": {
             "type": "string",
-            "examples": [
-              "Error name"
-            ]
+            "example": "Zack King"
           },
-          "message": {
+          "membership_start": {
             "type": "string",
-            "examples": [
-              "Error message"
-            ]
+            "example": "2012-05-20T00:00:00.000Z"
           },
-          "errors": {
-            "type": "object",
-            "examples": [
-              "Errors"
-            ]
+          "email": {
+            "type": "string",
+            "example": "freemail@gmail.com"
           }
         }
       }

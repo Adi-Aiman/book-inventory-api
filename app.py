@@ -6,6 +6,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from dotenv import load_dotenv
 from db import db
 from resources.book import book_B as book_blueprint
+from resources.student import student_B as student_blueprint
 from seed_script import Seeder
 
 load_dotenv()
@@ -27,6 +28,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     }    
 )
 app.register_blueprint(book_blueprint)
+app.register_blueprint(student_blueprint)
 app.register_blueprint(swaggerui_blueprint)
 
 db.init_app(app)
